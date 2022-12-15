@@ -11,11 +11,18 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features/",
         glue = "steps",
         dryRun = false,
-        tags = "@tc1103",
+        tags = "@tc1101",
         monochrome = true,
-        plugin = {"pretty"}
+       //pretty keyword prints the steps in the console to increase readability
+        //to generate the reports we need plugin of runner class
+        //when we generate any report, this should be under target folder
+
+        plugin = {"pretty", "html:target/cucumber.html", "json:target/cucumber.json"}
 
 )
+
 public class SmokeRunner {
 
 }
+
+

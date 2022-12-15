@@ -4,6 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,7 +34,6 @@ public class LoginSteps extends CommonMethods {
     @When("user enters valid username and valid password")
     public void user_enters_valid_username_and_valid_password() {
 
-        LoginPage login = new LoginPage();
        sendText(login.usernameTextField, ConfigReader.getPropertyValue("username"));
         sendText(login.passwordTextField, ConfigReader.getPropertyValue("password"));
     }
@@ -41,14 +41,12 @@ public class LoginSteps extends CommonMethods {
     @When("user enters ess username and valid password")
     public void user_enters_ess_username_and_valid_password() {
 
-        LoginPage login = new LoginPage();
         sendText(login.usernameTextField, "asmahuma321");
         sendText(login.passwordTextField, "Hum@nhrm123");
     }
 
     @When("user enters invalid username and valid password")
     public void user_enters_invalid_username_and_valid_password() {
-        LoginPage login = new LoginPage();
         sendText(login.usernameTextField, "admin123");
         sendText(login.passwordTextField, "Hum@nhrm");
     }
@@ -61,14 +59,27 @@ public class LoginSteps extends CommonMethods {
 
     @When("user clicks on login button")
     public void user_clicks_on_login_button() {
-        LoginPage login = new LoginPage();
         click(login.loginButton);
+    }
+
+    @When("user enters different {string} and {string} and verify the {string} for it")
+    public void user_enters_different_and_and_verify_the_for_it(String username, String password, String errorMessage) throws InterruptedException {
+        sendText(login.usernameTextField, username);
+        sendText(login.passwordTextField, password);
+        click(login.loginButton);
+        Thread.sleep(1000);
+
+        String errorActual = login.errorMessage.getText();
+        Assert.assertEquals(errorActual, errorMessage);
+
     }
 
     @Then("user is successfully logged in")
     public void user_is_successfully_logged_in() {
-        WebElement welcomeMessage = driver.findElement(By.xpath("//a[text() = 'Welcome Admin']"));
-        if(welcomeMessage.isDisplayed()) {
+
+        //int i = 10/0;
+        //WebElement welcomeMessage = driver.findElement(By.xpath("//a[text() = 'Welcome Admin']"));
+        if(dashboard.welcomeMessage.isDisplayed()) {
 
             System.out.println("Test case is passed");
         }

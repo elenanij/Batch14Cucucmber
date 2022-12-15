@@ -16,6 +16,9 @@ public class LoginPage extends CommonMethods {
     @FindBy (css="input#btnLogin")
     public  WebElement loginButton;
 
+    @FindBy(id = "spanMessage")
+    public WebElement errorMessage;
+
     //    call the constructor to intialize all elements
     public LoginPage(){
         PageFactory.initElements(driver,this);
